@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - dagamez1's Blog</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Our Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen antialiased transition-colors duration-300">
+
+    <!-- Header Navigation -->
+    <nav class="w-full bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Blogger Name -->
+                <a href="index.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">
+                    dagamez1's Blog
+                </a>
+                
+                <!-- Controls -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span class="text-sm font-semibold">Quay lại</span>
+                    </a>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <i data-lucide="sun" class="block dark:hidden"></i>
+                        <i data-lucide="moon" class="hidden dark:block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 sm:p-10">
+            <h1 class="text-3xl font-extrabold mb-6 flex items-center">
+                <i data-lucide="edit" class="w-8 h-8 mr-3 text-indigo-600 dark:text-indigo-400"></i>
+                Đăng bài viết mới
+            </h1>
+            
+            <!-- Upload Form -->
+            <form id="blog-form" class="space-y-6">
+                
+                <!-- Author Name -->
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Tên tác giả</label>
+                    <input 
+                        type="text" 
+                        id="author-input"
+                        value="dagamez1"
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        required
+                    >
+                </div>
+                
+                <!-- Image URL -->
+                <div>
+                    <label class="block text-sm font-semibold mb-2">URL hình ảnh đại diện</label>
+                    <input 
+                        type="url" 
+                        id="image-input"
+                        placeholder="https://example.com/image.jpg"
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Để trống sẽ sử dụng hình ảnh mặc định</p>
+                </div>
+                
+                <!-- Tags -->
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Tags (phân cách bằng dấu phẩy)</label>
+                    <input 
+                        type="text" 
+                        id="tags-input"
+                        placeholder="blockchain, crypto, analysis"
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                </div>
+                
+                <!-- Source Language -->
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Ngôn ngữ gốc</label>
+                    <select 
+                        id="source-lang"
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                        <option value="vi">Tiếng Việt (VI)</option>
+                        <option value="en">English (EN)</option>
+                    </select>
+                </div>
+                
+                <!-- Markdown File Upload -->
+                <div>
+                    <label class="block text-sm font-semibold mb-2">File Markdown (.md)</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <i data-lucide="upload" class="w-10 h-10 mb-3 text-gray-400"></i>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click để upload</span> hoặc kéo thả file</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Markdown (.md)</p>
+                            </div>
+                            <input id="markdown-file" type="file" accept=".md" class="hidden" required />
+                        </label>
+                    </div>
+                    <p id="file-name" class="text-sm text-gray-600 dark:text-gray-400 mt-2"></p>
+                </div>
+                
+                <!-- Markdown Preview -->
+                <div id="markdown-preview-container" class="hidden">
+                    <label class="block text-sm font-semibold mb-2">Preview nội dung</label>
+                    <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-700 max-h-96 overflow-y-auto">
+                        <div id="markdown-preview" class="prose dark:prose-invert max-w-none"></div>
+                    </div>
+                </div>
+                
+                <!-- Translation Options -->
+                <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
+                    <label class="flex items-center mb-3">
+                        <input type="checkbox" id="auto-translate" class="mr-2 rounded text-indigo-600 focus:ring-indigo-500" checked />
+                        <span class="text-sm font-semibold">Tự động dịch sang ngôn ngữ còn lại</span>
+                    </label>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                        <i data-lucide="info" class="w-3 h-3 inline"></i>
+                        Nếu bạn chọn Tiếng Việt làm ngôn ngữ gốc, bài viết sẽ tự động được dịch sang Tiếng Anh và ngược lại
+                    </p>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="flex items-center space-x-4">
+                    <button 
+                        type="submit" 
+                        id="submit-btn"
+                        class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+                    >
+                        <i data-lucide="save" class="w-5 h-5"></i>
+                        <span>Đăng bài viết</span>
+                    </button>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div id="progress-container" class="hidden">
+                    <div class="bg-indigo-100 dark:bg-indigo-900 border border-indigo-200 dark:border-indigo-700 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="animate-spin">
+                                <i data-lucide="loader" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+                            </div>
+                            <span id="progress-text" class="text-sm font-semibold text-indigo-700 dark:text-indigo-300">Đang xử lý...</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div id="progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        
+    </main>
+
+    <!-- Markdown Parser Library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Blog Storage Manager -->
+    <script src="blog-storage.js"></script>
+    
+    <!-- Translator Module -->
+    <script src="translator.js"></script>
+
+    <!-- Admin Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize icons
+            lucide.createIcons();
+
+            // Theme Toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const htmlEl = document.documentElement;
+
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                htmlEl.classList.add('dark');
+            } else {
+                htmlEl.classList.add('light');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                if (htmlEl.classList.contains('dark')) {
+                    htmlEl.classList.remove('dark');
+                    htmlEl.classList.add('light');
+                    localStorage.theme = 'light';
+                } else {
+                    htmlEl.classList.add('dark');
+                    htmlEl.classList.remove('light');
+                    localStorage.theme = 'dark';
+                }
+                lucide.createIcons();
+            });
+
+            // File Upload Handling
+            const fileInput = document.getElementById('markdown-file');
+            const fileNameDisplay = document.getElementById('file-name');
+            const previewContainer = document.getElementById('markdown-preview-container');
+            const previewDiv = document.getElementById('markdown-preview');
+            let markdownContent = '';
+
+            fileInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    fileNameDisplay.textContent = `Đã chọn: ${file.name}`;
+                    
+                    // Read file content
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        markdownContent = event.target.result;
+                        
+                        // Show preview
+                        previewDiv.innerHTML = marked.parse(markdownContent);
+                        previewContainer.classList.remove('hidden');
+                        lucide.createIcons();
+                    };
+                    reader.readAsText(file);
+                }
+            });
+
+            // Form Submission
+            const form = document.getElementById('blog-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!markdownContent) {
+                    alert('Vui lòng chọn file Markdown!');
+                    return;
+                }
+
+                // Get form data
+                const author = document.getElementById('author-input').value;
+                const imageUrl = document.getElementById('image-input').value || 'https://placehold.co/1200x600/6366f1/ffffff?text=Blog+Post';
+                const tagsInput = document.getElementById('tags-input').value;
+                const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
+                const sourceLang = document.getElementById('source-lang').value;
+                const autoTranslate = document.getElementById('auto-translate').checked;
+
+                // Disable submit button
+                submitBtn.disabled = true;
+                progressContainer.classList.remove('hidden');
+                progressBar.style.width = '10%';
+                progressText.textContent = 'Đang chuẩn bị...';
+
+                try {
+                    // Extract title from markdown (first h1)
+                    const titleMatch = markdownContent.match(/^#\s+(.+)$/m);
+                    const title = titleMatch ? titleMatch[1] : 'Untitled Post';
+
+                    // Extract excerpt (first paragraph)
+                    const paragraphMatch = markdownContent.match(/\n\n(.+?)\n\n/);
+                    const excerpt = paragraphMatch ? paragraphMatch[1].substring(0, 150) + '...' : '';
+
+                    // Create post object
+                    const post = {
+                        author: author,
+                        image: imageUrl,
+                        tags: tags,
+                        translations: {
+                            [sourceLang]: {
+                                title: title,
+                                content: markdownContent,
+                                excerpt: excerpt
+                            }
+                        }
+                    };
+
+                    progressBar.style.width = '30%';
+                    progressText.textContent = 'Đã lưu bản gốc...';
+
+                    // Translate to other language if enabled
+                    if (autoTranslate) {
+                        const targetLang = sourceLang === 'vi' ? 'en' : 'vi';
+                        
+                        progressBar.style.width = '40%';
+                        progressText.textContent = `Đang dịch sang ${targetLang.toUpperCase()}...`;
+                        
+                        try {
+                            const translation = await Translator.translatePost(post, targetLang, sourceLang);
+                            post.translations[targetLang] = translation;
+                            
+                            progressBar.style.width = '80%';
+                            progressText.textContent = 'Dịch hoàn tất!';
+                        } catch (error) {
+                            console.error(`Failed to translate to ${targetLang}:`, error);
+                            alert(`Lưu ý: Không thể dịch tự động sang ${targetLang.toUpperCase()}. Bài viết chỉ có bản ${sourceLang.toUpperCase()}.`);
+                        }
+                    }
+
+                    progressBar.style.width = '90%';
+                    progressText.textContent = 'Đang lưu bài viết...';
+
+                    // Save post (sẽ tự động download file posts.json)
+                    await BlogStorage.savePost(post);
+
+                    progressBar.style.width = '100%';
+                    progressText.textContent = 'Hoàn thành!';
+
+                    // Success message với hướng dẫn
+                    setTimeout(() => {
+                        alert('✅ Đăng bài thành công!\n\n📥 File "posts.json" đã được tải xuống.\n\n📋 Hướng dẫn tiếp theo:\n1. Tìm file "posts.json" trong thư mục Downloads\n2. Upload file này lên thư mục gốc của website (thay thế file cũ)\n3. Refresh trang để xem bài viết mới!');
+                        
+                        // Không redirect ngay, để người dùng có thể upload file trước
+                        submitBtn.disabled = false;
+                        progressContainer.classList.add('hidden');
+                        form.reset();
+                        markdownContent = '';
+                        previewContainer.classList.add('hidden');
+                    }, 1000);
+
+                } catch (error) {
+                    console.error('Error publishing post:', error);
+                    alert('Có lỗi xảy ra khi đăng bài: ' + error.message);
+                    submitBtn.disabled = false;
+                    progressContainer.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

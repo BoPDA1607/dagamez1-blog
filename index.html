@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dagamez1's Blog</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Our Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen antialiased transition-colors duration-300">
+
+    <!-- Header Navigation -->
+    <nav class="w-full bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Blogger Name -->
+                <a href="index.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">
+                    dagamez1's Blog
+                </a>
+                
+                <!-- Controls: Language + Theme + Admin -->
+                <div class="flex items-center space-x-4">
+                    
+                    <!-- Language Selector -->
+                    <div id="language-switcher" class="flex items-center space-x-1 sm:space-x-2 rounded-lg bg-gray-100 dark:bg-gray-700 p-1">
+                        <button data-lang-button="vi" class="lang-btn active text-xs sm:text-sm px-2 py-1 rounded-md transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-600">VI</button>
+                        <button data-lang-button="en" class="lang-btn text-xs sm:text-sm px-2 py-1 rounded-md transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-600">EN</button>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <i data-lucide="sun" class="block dark:hidden"></i>
+                        <i data-lucide="moon" class="hidden dark:block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Blog List View (Default) -->
+        <div id="blog-list-view">
+            <div class="mb-8">
+                <h1 class="text-4xl font-extrabold mb-4">Tất cả bài viết</h1>
+                <p class="text-gray-600 dark:text-gray-400">Khám phá các bài viết mới nhất từ dagamez1</p>
+            </div>
+            
+            <!-- Blog Cards Grid -->
+            <div id="blog-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Blog cards will be dynamically loaded here -->
+                <div class="col-span-full text-center py-12">
+                    <div class="animate-pulse">
+                        <i data-lucide="loader" class="w-12 h-12 mx-auto text-indigo-600 dark:text-indigo-400"></i>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">Đang tải bài viết...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single Article View (Hidden by default) -->
+        <article id="blog-single-view" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+            <!-- Back Button -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                <button id="back-to-list" class="flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span class="font-semibold">Quay lại danh sách</span>
+                </button>
+            </div>
+            
+            <!-- Header Image -->
+            <img 
+                id="blog-header-image"
+                src="https://placehold.co/1200x600/6366f1/ffffff?text=Blog+Post" 
+                alt="Blog Header" 
+                class="w-full h-48 sm:h-64 md:h-80 object-cover"
+                onerror="this.src='https://placehold.co/1200x600/ef4444/ffffff?text=Image+Load+Error'"
+            >
+            
+            <!-- Article Content -->
+            <div class="p-6 sm:p-10">
+                <!-- Title -->
+                <h1 id="blog-title" class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
+                    Đang tải bài viết...
+                </h1>
+                
+                <!-- Meta Info -->
+                <div id="blog-meta" class="text-sm text-gray-500 dark:text-gray-400 mb-8">
+                    <!-- Meta info will be loaded here -->
+                </div>
+                
+                <!-- Blog Body -->
+                <div id="blog-body" class="prose prose-lg dark:prose-invert max-w-none">
+                    <!-- Blog content will be loaded here -->
+                </div>
+            </div>
+        </article>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="w-full mt-12 py-8 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 dark:text-gray-400">
+            <p>&copy; 2025 dagamez1's Blog. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Markdown Parser Library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Blog Storage Manager -->
+    <script src="blog-storage.js"></script>
+
+    <!-- Our Custom JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
