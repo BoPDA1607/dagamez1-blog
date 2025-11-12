@@ -94,32 +94,113 @@
                     >
                 </div>
                 
-                <!-- Source Language -->
-                <div>
-                    <label class="block text-sm font-semibold mb-2">Ngôn ngữ gốc</label>
-                    <select 
-                        id="source-lang"
-                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    >
-                        <option value="vi">Tiếng Việt (VI)</option>
-                        <option value="en">English (EN)</option>
-                    </select>
-                </div>
-                
-                <!-- Markdown File Upload -->
-                <div>
-                    <label class="block text-sm font-semibold mb-2">File Markdown (.md)</label>
-                    <div class="flex items-center justify-center w-full">
-                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <i data-lucide="upload" class="w-10 h-10 mb-3 text-gray-400"></i>
-                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click để upload</span> hoặc kéo thả file</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Markdown (.md)</p>
+                <!-- Upload Mode Selection -->
+                <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
+                    <label class="block text-sm font-semibold mb-3">Phương thức đăng bài</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="upload-mode" value="single" class="mr-3 text-indigo-600 focus:ring-indigo-500" checked />
+                            <div>
+                                <span class="font-semibold">Upload 1 file + Tự động dịch</span>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Upload 1 file Markdown, hệ thống tự động dịch sang ngôn ngữ còn lại (phù hợp với bài ngắn)</p>
                             </div>
-                            <input id="markdown-file" type="file" accept=".md" class="hidden" required />
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="upload-mode" value="dual" class="mr-3 text-indigo-600 focus:ring-indigo-500" />
+                            <div>
+                                <span class="font-semibold">Upload 2 file riêng biệt</span>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Upload 2 file Markdown (VI & EN), không cần dịch tự động (khuyến nghị cho bài dài)</p>
+                            </div>
                         </label>
                     </div>
-                    <p id="file-name" class="text-sm text-gray-600 dark:text-gray-400 mt-2"></p>
+                </div>
+                
+                <!-- Single File Upload Mode -->
+                <div id="single-file-mode">
+                    <!-- Source Language -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Ngôn ngữ gốc</label>
+                        <select 
+                            id="source-lang"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        >
+                            <option value="vi">Tiếng Việt (VI)</option>
+                            <option value="en">English (EN)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Markdown File Upload -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">File Markdown (.md)</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i data-lucide="upload" class="w-10 h-10 mb-3 text-gray-400"></i>
+                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click để upload</span> hoặc kéo thả file</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Markdown (.md)</p>
+                                </div>
+                                <input id="markdown-file-single" type="file" accept=".md" class="hidden" />
+                            </label>
+                        </div>
+                        <p id="file-name-single" class="text-sm text-gray-600 dark:text-gray-400 mt-2"></p>
+                    </div>
+                    
+                    <!-- Auto Translate Option -->
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="auto-translate" class="mr-2 rounded text-indigo-600 focus:ring-indigo-500" checked />
+                            <span class="text-sm font-semibold">Tự động dịch sang ngôn ngữ còn lại</span>
+                        </label>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            <i data-lucide="info" class="w-3 h-3 inline"></i>
+                            Dịch tự động có thể không hoàn hảo với bài viết dài
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Dual File Upload Mode -->
+                <div id="dual-file-mode" class="hidden space-y-6">
+                    <!-- Vietnamese File -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">
+                            <span class="inline-flex items-center">
+                                <span class="mr-2">📝</span>
+                                File Tiếng Việt (.md)
+                            </span>
+                        </label>
+                        <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-indigo-300 dark:border-indigo-600 border-dashed rounded-lg cursor-pointer bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i data-lucide="file-text" class="w-10 h-10 mb-3 text-indigo-600 dark:text-indigo-400"></i>
+                                    <p class="mb-2 text-sm text-gray-700 dark:text-gray-300"><span class="font-semibold">Upload bản Tiếng Việt</span></p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">post.vi.md</p>
+                                </div>
+                                <input id="markdown-file-vi" type="file" accept=".md" class="hidden" />
+                            </label>
+                        </div>
+                        <p id="file-name-vi" class="text-sm text-gray-600 dark:text-gray-400 mt-2"></p>
+                    </div>
+                    
+                    <!-- English File -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">
+                            <span class="inline-flex items-center">
+                                <span class="mr-2">📄</span>
+                                File Tiếng Anh (.md)
+                            </span>
+                        </label>
+                        <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-green-300 dark:border-green-600 border-dashed rounded-lg cursor-pointer bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i data-lucide="file-text" class="w-10 h-10 mb-3 text-green-600 dark:text-green-400"></i>
+                                    <p class="mb-2 text-sm text-gray-700 dark:text-gray-300"><span class="font-semibold">Upload English version</span></p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">post.en.md</p>
+                                </div>
+                                <input id="markdown-file-en" type="file" accept=".md" class="hidden" />
+                            </label>
+                        </div>
+                        <p id="file-name-en" class="text-sm text-gray-600 dark:text-gray-400 mt-2"></p>
+                    </div>
                 </div>
                 
                 <!-- Markdown Preview -->
@@ -128,18 +209,6 @@
                     <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-700 max-h-96 overflow-y-auto">
                         <div id="markdown-preview" class="prose dark:prose-invert max-w-none"></div>
                     </div>
-                </div>
-                
-                <!-- Translation Options -->
-                <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
-                    <label class="flex items-center mb-3">
-                        <input type="checkbox" id="auto-translate" class="mr-2 rounded text-indigo-600 focus:ring-indigo-500" checked />
-                        <span class="text-sm font-semibold">Tự động dịch sang ngôn ngữ còn lại</span>
-                    </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
-                        <i data-lucide="info" class="w-3 h-3 inline"></i>
-                        Nếu bạn chọn Tiếng Việt làm ngôn ngữ gốc, bài viết sẽ tự động được dịch sang Tiếng Anh và ngược lại
-                    </p>
                 </div>
                 
                 <!-- Submit Button -->
@@ -213,26 +282,75 @@
             });
 
             // File Upload Handling
-            const fileInput = document.getElementById('markdown-file');
-            const fileNameDisplay = document.getElementById('file-name');
+            const fileInputSingle = document.getElementById('markdown-file-single');
+            const fileNameDisplaySingle = document.getElementById('file-name-single');
+            const fileInputVi = document.getElementById('markdown-file-vi');
+            const fileNameDisplayVi = document.getElementById('file-name-vi');
+            const fileInputEn = document.getElementById('markdown-file-en');
+            const fileNameDisplayEn = document.getElementById('file-name-en');
             const previewContainer = document.getElementById('markdown-preview-container');
             const previewDiv = document.getElementById('markdown-preview');
-            let markdownContent = '';
+            const singleFileMode = document.getElementById('single-file-mode');
+            const dualFileMode = document.getElementById('dual-file-mode');
+            const uploadModeRadios = document.getElementsByName('upload-mode');
+            let markdownContentSingle = '';
+            let markdownContentVi = '';
+            let markdownContentEn = '';
 
-            fileInput.addEventListener('change', async (e) => {
+            uploadModeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.value === 'single' && radio.checked) {
+                        singleFileMode.classList.remove('hidden');
+                        dualFileMode.classList.add('hidden');
+                    } else if (radio.value === 'dual' && radio.checked) {
+                        singleFileMode.classList.add('hidden');
+                        dualFileMode.classList.remove('hidden');
+                    }
+                });
+            });
+
+            fileInputSingle.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (file) {
-                    fileNameDisplay.textContent = `Đã chọn: ${file.name}`;
+                    fileNameDisplaySingle.textContent = `Đã chọn: ${file.name}`;
                     
                     // Read file content
                     const reader = new FileReader();
                     reader.onload = (event) => {
-                        markdownContent = event.target.result;
+                        markdownContentSingle = event.target.result;
                         
                         // Show preview
-                        previewDiv.innerHTML = marked.parse(markdownContent);
+                        previewDiv.innerHTML = marked.parse(markdownContentSingle);
                         previewContainer.classList.remove('hidden');
                         lucide.createIcons();
+                    };
+                    reader.readAsText(file);
+                }
+            });
+
+            fileInputVi.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    fileNameDisplayVi.textContent = `Đã chọn: ${file.name}`;
+                    
+                    // Read file content
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        markdownContentVi = event.target.result;
+                    };
+                    reader.readAsText(file);
+                }
+            });
+
+            fileInputEn.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    fileNameDisplayEn.textContent = `Đã chọn: ${file.name}`;
+                    
+                    // Read file content
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        markdownContentEn = event.target.result;
                     };
                     reader.readAsText(file);
                 }
@@ -248,8 +366,15 @@
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                if (!markdownContent) {
+                const selectedMode = Array.from(uploadModeRadios).find(radio => radio.checked).value;
+
+                if (selectedMode === 'single' && !markdownContentSingle) {
                     alert('Vui lòng chọn file Markdown!');
+                    return;
+                }
+
+                if (selectedMode === 'dual' && (!markdownContentVi || !markdownContentEn)) {
+                    alert('Vui lòng chọn cả hai file Markdown (VI & EN)!');
                     return;
                 }
 
@@ -268,48 +393,78 @@
                 progressText.textContent = 'Đang chuẩn bị...';
 
                 try {
-                    // Extract title from markdown (first h1)
-                    const titleMatch = markdownContent.match(/^#\s+(.+)$/m);
-                    const title = titleMatch ? titleMatch[1] : 'Untitled Post';
-
-                    // Extract excerpt (first paragraph)
-                    const paragraphMatch = markdownContent.match(/\n\n(.+?)\n\n/);
-                    const excerpt = paragraphMatch ? paragraphMatch[1].substring(0, 150) + '...' : '';
-
-                    // Create post object
-                    const post = {
+                    let post = {
                         author: author,
                         image: imageUrl,
                         tags: tags,
-                        translations: {
-                            [sourceLang]: {
-                                title: title,
-                                content: markdownContent,
-                                excerpt: excerpt
-                            }
-                        }
+                        translations: {}
                     };
 
-                    progressBar.style.width = '30%';
-                    progressText.textContent = 'Đã lưu bản gốc...';
+                    if (selectedMode === 'single') {
+                        // Extract title from markdown (first h1)
+                        const titleMatch = markdownContentSingle.match(/^#\s+(.+)$/m);
+                        const title = titleMatch ? titleMatch[1] : 'Untitled Post';
 
-                    // Translate to other language if enabled
-                    if (autoTranslate) {
-                        const targetLang = sourceLang === 'vi' ? 'en' : 'vi';
-                        
-                        progressBar.style.width = '40%';
-                        progressText.textContent = `Đang dịch sang ${targetLang.toUpperCase()}...`;
-                        
-                        try {
-                            const translation = await Translator.translatePost(post, targetLang, sourceLang);
-                            post.translations[targetLang] = translation;
+                        // Extract excerpt (first paragraph)
+                        const paragraphMatch = markdownContentSingle.match(/\n\n(.+?)\n\n/);
+                        const excerpt = paragraphMatch ? paragraphMatch[1].substring(0, 150) + '...' : '';
+
+                        post.translations[sourceLang] = {
+                            title: title,
+                            content: markdownContentSingle,
+                            excerpt: excerpt
+                        };
+
+                        progressBar.style.width = '30%';
+                        progressText.textContent = 'Đã lưu bản gốc...';
+
+                        // Translate to other language if enabled
+                        if (autoTranslate) {
+                            const targetLang = sourceLang === 'vi' ? 'en' : 'vi';
                             
-                            progressBar.style.width = '80%';
-                            progressText.textContent = 'Dịch hoàn tất!';
-                        } catch (error) {
-                            console.error(`Failed to translate to ${targetLang}:`, error);
-                            alert(`Lưu ý: Không thể dịch tự động sang ${targetLang.toUpperCase()}. Bài viết chỉ có bản ${sourceLang.toUpperCase()}.`);
+                            progressBar.style.width = '40%';
+                            progressText.textContent = `Đang dịch sang ${targetLang.toUpperCase()}...`;
+                            
+                            try {
+                                const translation = await Translator.translatePost(post, targetLang, sourceLang);
+                                post.translations[targetLang] = translation;
+                                
+                                progressBar.style.width = '80%';
+                                progressText.textContent = 'Dịch hoàn tất!';
+                            } catch (error) {
+                                console.error(`Failed to translate to ${targetLang}:`, error);
+                                alert(`Lưu ý: Không thể dịch tự động sang ${targetLang.toUpperCase()}. Bài viết chỉ có bản ${sourceLang.toUpperCase()}.`);
+                            }
                         }
+                    } else if (selectedMode === 'dual') {
+                        // Extract title and excerpt for Vietnamese
+                        const titleMatchVi = markdownContentVi.match(/^#\s+(.+)$/m);
+                        const titleVi = titleMatchVi ? titleMatchVi[1] : 'Untitled Post';
+
+                        const paragraphMatchVi = markdownContentVi.match(/\n\n(.+?)\n\n/);
+                        const excerptVi = paragraphMatchVi ? paragraphMatchVi[1].substring(0, 150) + '...' : '';
+
+                        post.translations['vi'] = {
+                            title: titleVi,
+                            content: markdownContentVi,
+                            excerpt: excerptVi
+                        };
+
+                        // Extract title and excerpt for English
+                        const titleMatchEn = markdownContentEn.match(/^#\s+(.+)$/m);
+                        const titleEn = titleMatchEn ? titleMatchEn[1] : 'Untitled Post';
+
+                        const paragraphMatchEn = markdownContentEn.match(/\n\n(.+?)\n\n/);
+                        const excerptEn = paragraphMatchEn ? paragraphMatchEn[1].substring(0, 150) + '...' : '';
+
+                        post.translations['en'] = {
+                            title: titleEn,
+                            content: markdownContentEn,
+                            excerpt: excerptEn
+                        };
+
+                        progressBar.style.width = '80%';
+                        progressText.textContent = 'Đã lưu cả hai bản dịch!';
                     }
 
                     progressBar.style.width = '90%';
@@ -329,7 +484,9 @@
                         submitBtn.disabled = false;
                         progressContainer.classList.add('hidden');
                         form.reset();
-                        markdownContent = '';
+                        markdownContentSingle = '';
+                        markdownContentVi = '';
+                        markdownContentEn = '';
                         previewContainer.classList.add('hidden');
                     }, 1000);
 
